@@ -9,5 +9,4 @@ public class ApiRestTestesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiRestTestesApplication.class, args);
 	}
-
 }
