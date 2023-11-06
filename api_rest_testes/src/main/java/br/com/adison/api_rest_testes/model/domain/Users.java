@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
