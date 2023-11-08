@@ -3,6 +3,7 @@ package br.com.adison.api_rest_testes.model.service.implement;
 import br.com.adison.api_rest_testes.model.domain.Users;
 import br.com.adison.api_rest_testes.model.domain.dto.UserDTO;
 import br.com.adison.api_rest_testes.model.service.UserService;
+import br.com.adison.api_rest_testes.model.service.exceptions.DataIntegratyViolationException;
 import br.com.adison.api_rest_testes.model.service.exceptions.ObjectNotFoundException;
 import br.com.adison.api_rest_testes.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,12 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public Users create(UserDTO object) {
+        findByEmail(object);
         return repository.save(mapper.map(object, Users.class));
+    }
+
+    private void findByEmail(UserDTO object){
+        Optional<Users> users = repository.findByEmail(object.getEmail());
+        if (users.isPresent()) throw new DataIntegratyViolationException("E-mail já cadastrado!");
     }
 }
