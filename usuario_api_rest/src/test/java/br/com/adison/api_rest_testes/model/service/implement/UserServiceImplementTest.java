@@ -3,10 +3,12 @@ package br.com.adison.api_rest_testes.model.service.implement;
 import br.com.adison.api_rest_testes.model.domain.Users;
 import br.com.adison.api_rest_testes.model.domain.dto.UserDTO;
 import br.com.adison.api_rest_testes.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +47,7 @@ class UserServiceImplementTest {
     private Users users;
     private UserDTO userDTO;
     private Optional<Users> optionalUser;
-    public static final int ID = 1;
+    public static final Integer  ID = 1;
     public static final String NOME_TESTE = "nomeTeste";
     public static final String EMAIL = "emailTeste@gmail.com";
     public static final String PASSWORD = "123";
@@ -61,8 +63,50 @@ class UserServiceImplementTest {
         startUser();
     }
 
+    /**
+     * @Funcionalidade_original_testada: Retorna um objeto Users com um id especificado nos parâmetros
+     * ou lança uma exception caso nao tenha no banco,
+     * (return object.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado!").
+     *
+     * @Nomeação: Esse método é para testar o findById, porém seu nome deve ser uma descrição
+     * do teste que vai ser feito.
+     *
+     * @Descrição: Quando executar FindById retorna uma instância de usuário,
+     * (whenRunnigFindByIdThenReturnAnUserInstance).
+     *
+     * @Explicação: Na primeira linha do teste é mockado os dados passados no parâmetro,
+     * quando chamar o findById de repository passando qualquer número inteiro como id
+     * então retorne o objeto optionalUser.<p>
+     * Na segunda linha é chamado o método da classe testada, seguindo as regras do mock acima,
+     * e guardado seu objeto em "response".<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: é feita uma comparação para verificar se essa classe guardada, response.getClass(),
+     * está retornando um objeto do tipo "Users.class".<p>
+     * - TERCEIRA: é feita uma comparação para verificar se o id gerado, response.getId(), corresponde
+     * ao ID passado como parâmetro e criado nessa classe.<p>
+     * - QUARTO: é feita uma comparação para verificar se o id gerado, response.getName(), corresponde
+     * ao NOME_TESTE passado como parâmetro e criado nessa classe.<p>
+     * - QUINTO: é feita uma comparação para verificar se o nome gerado, response.getEmail(), corresponde
+     * ao EMAIL passado como parâmetro e criado nessa classe.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     *
+     * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
+     * atributos testados mais segurança seguro o sistema e os códigos serão.
+     */
     @Test
-    void findById() {
+    void whenRunnigFindByIdThenReturnAnUserInstance() {
+        Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(optionalUser);
+        Users response = service.findById(ID);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(Users.class, response.getClass());
+        Assertions.assertEquals(ID, response.getId());
+        Assertions.assertEquals(NOME_TESTE, response.getName());
+        Assertions.assertEquals(EMAIL, response.getEmail());
     }
 
     @Test
