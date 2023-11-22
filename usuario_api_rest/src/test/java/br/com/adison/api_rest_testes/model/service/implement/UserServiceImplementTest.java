@@ -2,6 +2,7 @@ package br.com.adison.api_rest_testes.model.service.implement;
 
 import br.com.adison.api_rest_testes.model.domain.Users;
 import br.com.adison.api_rest_testes.model.domain.dto.UserDTO;
+import br.com.adison.api_rest_testes.model.service.exceptions.ObjectNotFoundException;
 import br.com.adison.api_rest_testes.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,9 +87,9 @@ class UserServiceImplementTest {
      * está retornando um objeto do tipo "Users.class".<p>
      * - TERCEIRA: é feita uma comparação para verificar se o id gerado, response.getId(), corresponde
      * ao ID passado como parâmetro e criado nessa classe.<p>
-     * - QUARTO: é feita uma comparação para verificar se o id gerado, response.getName(), corresponde
+     * - QUARTA: é feita uma comparação para verificar se o id gerado, response.getName(), corresponde
      * ao NOME_TESTE passado como parâmetro e criado nessa classe.<p>
-     * - QUINTO: é feita uma comparação para verificar se o nome gerado, response.getEmail(), corresponde
+     * - QUINTA: é feita uma comparação para verificar se o nome gerado, response.getEmail(), corresponde
      * ao EMAIL passado como parâmetro e criado nessa classe.<p>
      *
      * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
@@ -107,6 +108,39 @@ class UserServiceImplementTest {
         Assertions.assertEquals(ID, response.getId());
         Assertions.assertEquals(NOME_TESTE, response.getName());
         Assertions.assertEquals(EMAIL, response.getEmail());
+    }
+
+    /**
+     * @Funcionalidade_original_testada: Retorna uma exception caso não encontre o objeto buscado,
+     * e exibe uma mensagem de erro,(return object.orElseThrow(()-> new ObjectNotFoundException
+     * ("Objeto não encontrado!").<p>
+     *
+     * @Nomeação: Esse método é para testar o lançamento de exception do findById, porém seu nome deve
+     * ser uma descrição do teste que vai ser feito.<p>
+     *
+     * @Descrição: Quando executar FindById retorna uma exception de objeto não encontrado,
+     * (whenFindByIdThenReturnAnObjectNotFoundException).<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o objeto retornado é igual a classe ObjectNotFoundException.class.<p>
+     * - SEGUNDA: verifica se a mensagem retornada é igual a mensagem capturada na exception.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException(){
+        Mockito
+                .when(repository
+                        .findById
+                                (Mockito.anyInt())).
+                thenThrow(new ObjectNotFoundException("Objeto não encontrado!"));
+        try {
+            service.findById(ID);
+        } catch (Exception ex){
+            Assertions.assertEquals(ObjectNotFoundException.class, ex.getClass());
+            Assertions.assertEquals("Objeto não encontrado!", ex.getMessage());
+        }
     }
 
     @Test
