@@ -39,6 +39,7 @@ import java.util.Optional;
  */
 @SpringBootTest
 class UserServiceImplementTest {
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
     @InjectMocks
     private UserServiceImplement service;
     @Mock
@@ -100,7 +101,10 @@ class UserServiceImplementTest {
      */
     @Test
     void whenRunnigFindByIdThenReturnAnUserInstance() {
-        Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(optionalUser);
+        Mockito
+                .when(repository
+                        .findById(Mockito.anyInt()))
+                .thenReturn(optionalUser);
         Users response = service.findById(ID);
 
         Assertions.assertNotNull(response);
@@ -132,14 +136,13 @@ class UserServiceImplementTest {
     void whenFindByIdThenReturnAnObjectNotFoundException(){
         Mockito
                 .when(repository
-                        .findById
-                                (Mockito.anyInt())).
-                thenThrow(new ObjectNotFoundException("Objeto não encontrado!"));
+                        .findById(Mockito.anyInt()))
+                .thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
         try {
             service.findById(ID);
         } catch (Exception ex){
             Assertions.assertEquals(ObjectNotFoundException.class, ex.getClass());
-            Assertions.assertEquals("Objeto não encontrado!", ex.getMessage());
+            Assertions.assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
         }
     }
 
