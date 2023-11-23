@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,6 +41,7 @@ import java.util.Optional;
 @SpringBootTest
 class UserServiceImplementTest {
     public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
+    public static final int INDEX = 0;
     @InjectMocks
     private UserServiceImplement service;
     @Mock
@@ -146,8 +148,40 @@ class UserServiceImplementTest {
         }
     }
 
+    /**
+     * @Funcionalidade_original_testada: Retorna uma exception caso não encontre o objeto buscado,
+     * e exibe uma mensagem de erro,(return object.orElseThrow(()-> new ObjectNotFoundException
+     * ("Objeto não encontrado!").<p>
+     *
+     * @Nomeação: Esse método é para testar o lançamento de exception do findById, porém seu nome deve
+     * ser uma descrição do teste que vai ser feito.<p>
+     *
+     * @Descrição: Quando executar FindById retorna uma exception de objeto não encontrado,
+     * (whenFindByIdThenReturnAnObjectNotFoundException).<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o objeto retornado é igual a classe ObjectNotFoundException.class.<p>
+     * - SEGUNDA: verifica se a mensagem retornada é igual a mensagem capturada na exception.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
     @Test
-    void findAll() {
+    void whenRunnigFindAllThenReturnAnListOfUsers() {
+        Mockito
+                .when(repository
+                        .findAll())
+                .thenReturn(List.of(users));
+        List<Users> response = service.findAll();
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(1, response.size());
+        Assertions.assertEquals(Users.class, response.get(INDEX).getClass());
+
+        Assertions.assertEquals(ID, response.get(INDEX).getId());
+        Assertions.assertEquals(NOME_TESTE, response.get(INDEX).getName());
+        Assertions.assertEquals(EMAIL, response.get(INDEX).getEmail());
+        Assertions.assertEquals(PASSWORD, response.get(INDEX).getPassword());
     }
 
     @Test
@@ -156,6 +190,7 @@ class UserServiceImplementTest {
 
     @Test
     void update() {
+
     }
 
     @Test
