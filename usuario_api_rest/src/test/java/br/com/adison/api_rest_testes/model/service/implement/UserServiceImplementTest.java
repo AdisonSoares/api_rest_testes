@@ -149,19 +149,23 @@ class UserServiceImplementTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Retorna uma exception caso não encontre o objeto buscado,
-     * e exibe uma mensagem de erro,(return object.orElseThrow(()-> new ObjectNotFoundException
-     * ("Objeto não encontrado!").<p>
+     * @Funcionalidade_original_testada: Retorna uma lista com todos os objetos users guardados
+     * no banco.<p>
      *
-     * @Nomeação: Esse método é para testar o lançamento de exception do findById, porém seu nome deve
+     * @Nomeação: Esse método é para testar o retorno da funcionalidade findAll, porém seu nome deve
      * ser uma descrição do teste que vai ser feito.<p>
      *
-     * @Descrição: Quando executar FindById retorna uma exception de objeto não encontrado,
-     * (whenFindByIdThenReturnAnObjectNotFoundException).<p>
+     * @Descrição: Quando executar findAll retorna uma lista de users,
+     * (whenRunnigFindAllThenReturnAnListOfUsers).<p>
      *
      * @Assertivas:
-     * - PRIMEIRA: verifica se o objeto retornado é igual a classe ObjectNotFoundException.class.<p>
-     * - SEGUNDA: verifica se a mensagem retornada é igual a mensagem capturada na exception.<p>
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se o tamanho da lista corresponde a 1, pelo valor mockado ter sido apenas 1.<p>
+     * - TERCEIRA: verifica se a classe guardada na lista mockada no primeiro indice corresponde a Users.class.<p>
+     * - QUARTA: verifica se o id guardado na lista mockada no primeiro indice corresponde a ID.<p>
+     * - QUINTA: verifica se o nome guardado na lista mockada no primeiro indice corresponde a NOME_TESTE.<p>
+     * - SEXTA: verifica se o email guardado na lista mockada no primeiro indice corresponde a EMAIL.<p>
+     * - SETIMA: verifica se a senha guardada na lista mockada no primeiro indice corresponde a PASSWORD.<p>
      *
      * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
      * o que está retornando.<p>
