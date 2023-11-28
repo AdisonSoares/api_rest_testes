@@ -2,6 +2,7 @@ package br.com.adison.api_rest_testes.model.service.implement;
 
 import br.com.adison.api_rest_testes.model.domain.Users;
 import br.com.adison.api_rest_testes.model.domain.dto.UserDTO;
+import br.com.adison.api_rest_testes.model.service.exceptions.DataIntegratyViolationException;
 import br.com.adison.api_rest_testes.model.service.exceptions.ObjectNotFoundException;
 import br.com.adison.api_rest_testes.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 
 /**
  * @Resumo: Classe criada para testar os métodos da classe UserServiceImplement, usando os recursos da Ide
@@ -224,6 +226,45 @@ class UserServiceImplementTest {
         Assertions.assertEquals(NOME_TESTE, response.getName());
         Assertions.assertEquals(EMAIL, response.getEmail());
         Assertions.assertEquals(PASSWORD, response.getPassword());
+    }
+
+    /**
+     * @Funcionalidade_original_testada: Cria um objeto um novo usuário no banco, ou seja, um
+     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
+     * (create e findByEmail).<p>
+     *
+     * @Nomeação: Esse método é para testar a exception jogada quando não cria um objeto do tipo
+     * users no banco.<p>
+     *
+     * @Descrição: Quando executar create retorna uma exception, não guardando o objeto no banco,
+     * (whenRunnigCreateThenReturnAnDataIntegratyViolationException).<p>
+     *
+     * @Try:
+     * - PRIMEIRA: acrescenta um ID diferente do mockado para verificar id diferente e gerar a exception de email duplicado.<p>
+     * - SEGUNDA: executa o método create passando o objeto userDTO gerando a exception mockada.<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se a exception capturada é igual a DataIntegratyViolationException.class.<p>
+     * - SEGUNDA: verifica se a mensagem do email não cadastrado correponde ao que está vindo na mensagem
+     * da exception lançada.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
+    @Test
+    void whenRunnigCreateThenReturnAnDataIntegratyViolationException() {
+        Mockito
+                .when(repository
+                        .findByEmail(anyString()))
+                .thenReturn(optionalUser);
+
+        try {
+            optionalUser.get().setId(2);
+            service.create(userDTO);
+        }catch (Exception ex){
+            Assertions.assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            Assertions.assertEquals("E-mail já cadastrado!", ex.getMessage());
+        }
     }
 
     @Test
