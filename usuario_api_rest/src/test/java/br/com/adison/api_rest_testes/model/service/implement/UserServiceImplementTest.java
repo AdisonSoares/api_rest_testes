@@ -190,12 +190,41 @@ class UserServiceImplementTest {
         Assertions.assertEquals(PASSWORD, response.get(INDEX).getPassword());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Cria um objeto um novo usuário no banco, ou seja, um
+     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.<p>
+     *
+     * @Nomeação: Esse método é para testar a criação de um objeto do tipo users no banco.<p>
+     *
+     * @Descrição: Quando executar create retorna sucesso, guardando um objeto tipo users,
+     * (whenRunnigCreateThenReturnSucess).<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se a classe guardada no mocks corresponde a Users.class.<p>
+     * - TERCEIRA: verifica se o id mockado corresponde a ID.<p>
+     * - QUARTA: verifica se o nome mockado corresponde a NOME_TESTE.<p>
+     * - QUINTA: verifica se o email mockado corresponde a EMAIL.<p>
+     * - SEXTA: verifica se a senha mockada corresponde a PASSWORD.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
     @Test
     void whenRunnigCreateThenReturnSucess() {
         Mockito
                 .when(repository
                         .save(any()))
                 .thenReturn(users);
+        Users response = service.create(userDTO);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(Users.class, response.getClass());
+
+        Assertions.assertEquals(ID, response.getId());
+        Assertions.assertEquals(NOME_TESTE, response.getName());
+        Assertions.assertEquals(EMAIL, response.getEmail());
+        Assertions.assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
