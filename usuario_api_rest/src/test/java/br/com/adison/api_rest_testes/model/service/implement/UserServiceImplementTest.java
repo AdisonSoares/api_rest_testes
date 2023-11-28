@@ -17,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 /**
  * @Resumo: Classe criada para testar os métodos da classe UserServiceImplement, usando os recursos da Ide
  * para criar o molde de cada teste.<p>
@@ -185,7 +187,11 @@ class UserServiceImplementTest {
     }
 
     @Test
-    void create() {
+    void whenRunnigCreateThenReturnSucess() {
+        Mockito
+                .when(repository
+                        .save(any()))
+                .thenReturn(users);
     }
 
     @Test
