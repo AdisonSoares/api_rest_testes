@@ -305,6 +305,45 @@ class UserServiceImplementTest {
         Assertions.assertEquals(PASSWORD, response.getPassword());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Atualiza um objeto, usuário existente no banco, ou seja, um
+     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
+     * (update e findByEmail).<p>
+     *
+     * @Nomeação: Esse método é para testar a exception jogada quando não atualiza um objeto do tipo
+     * users no banco.<p>
+     *
+     * @Descrição: Quando executar update retorna uma exception, não atualizando o objeto no banco,
+     * (whenRunnigCreateThenReturnAnDataIntegratyViolationException).<p>
+     *
+     * @Try:
+     * - PRIMEIRA: acrescenta um ID diferente do mockado para verificar id diferente e gerar a exception de email duplicado.<p>
+     * - SEGUNDA: executa o método update passando o objeto userDTO gerando a exception mockada.<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se a exception capturada é igual a DataIntegratyViolationException.class.<p>
+     * - SEGUNDA: verifica se a mensagem do email não cadastrado correponde ao que está vindo na mensagem
+     * da exception lançada.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
+    @Test
+    void whenRunnigUpdateThenReturnAnDataIntegratyViolationException() {
+        Mockito
+                .when(repository
+                        .findByEmail(anyString()))
+                .thenReturn(optionalUser);
+
+        try {
+            optionalUser.get().setId(2);
+            service.update(userDTO);
+        }catch (Exception ex){
+            Assertions.assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            Assertions.assertEquals("E-mail já cadastrado!", ex.getMessage());
+        }
+    }
+
     @Test
     void delete() {
     }
