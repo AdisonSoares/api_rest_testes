@@ -17,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 /**
  * @Resumo: Classe criada para testar os métodos da classe UserServiceImplement, usando os recursos da Ide
  * para criar o molde de cada teste.<p>
@@ -149,19 +151,23 @@ class UserServiceImplementTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Retorna uma exception caso não encontre o objeto buscado,
-     * e exibe uma mensagem de erro,(return object.orElseThrow(()-> new ObjectNotFoundException
-     * ("Objeto não encontrado!").<p>
+     * @Funcionalidade_original_testada: Retorna uma lista com todos os objetos users guardados
+     * no banco.<p>
      *
-     * @Nomeação: Esse método é para testar o lançamento de exception do findById, porém seu nome deve
+     * @Nomeação: Esse método é para testar o retorno da funcionalidade findAll, porém seu nome deve
      * ser uma descrição do teste que vai ser feito.<p>
      *
-     * @Descrição: Quando executar FindById retorna uma exception de objeto não encontrado,
-     * (whenFindByIdThenReturnAnObjectNotFoundException).<p>
+     * @Descrição: Quando executar findAll retorna uma lista de users,
+     * (whenRunnigFindAllThenReturnAnListOfUsers).<p>
      *
      * @Assertivas:
-     * - PRIMEIRA: verifica se o objeto retornado é igual a classe ObjectNotFoundException.class.<p>
-     * - SEGUNDA: verifica se a mensagem retornada é igual a mensagem capturada na exception.<p>
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se o tamanho da lista corresponde a 1, pelo valor mockado ter sido apenas 1.<p>
+     * - TERCEIRA: verifica se a classe guardada na lista mockada no primeiro indice corresponde a Users.class.<p>
+     * - QUARTA: verifica se o id guardado na lista mockada no primeiro indice corresponde a ID.<p>
+     * - QUINTA: verifica se o nome guardado na lista mockada no primeiro indice corresponde a NOME_TESTE.<p>
+     * - SEXTA: verifica se o email guardado na lista mockada no primeiro indice corresponde a EMAIL.<p>
+     * - SETIMA: verifica se a senha guardada na lista mockada no primeiro indice corresponde a PASSWORD.<p>
      *
      * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
      * o que está retornando.<p>
@@ -184,8 +190,41 @@ class UserServiceImplementTest {
         Assertions.assertEquals(PASSWORD, response.get(INDEX).getPassword());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Cria um objeto um novo usuário no banco, ou seja, um
+     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.<p>
+     *
+     * @Nomeação: Esse método é para testar a criação de um objeto do tipo users no banco.<p>
+     *
+     * @Descrição: Quando executar create retorna sucesso, guardando um objeto tipo users,
+     * (whenRunnigCreateThenReturnSucess).<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se a classe guardada no mocks corresponde a Users.class.<p>
+     * - TERCEIRA: verifica se o id mockado corresponde a ID.<p>
+     * - QUARTA: verifica se o nome mockado corresponde a NOME_TESTE.<p>
+     * - QUINTA: verifica se o email mockado corresponde a EMAIL.<p>
+     * - SEXTA: verifica se a senha mockada corresponde a PASSWORD.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
     @Test
-    void create() {
+    void whenRunnigCreateThenReturnSucess() {
+        Mockito
+                .when(repository
+                        .save(any()))
+                .thenReturn(users);
+        Users response = service.create(userDTO);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(Users.class, response.getClass());
+
+        Assertions.assertEquals(ID, response.getId());
+        Assertions.assertEquals(NOME_TESTE, response.getName());
+        Assertions.assertEquals(EMAIL, response.getEmail());
+        Assertions.assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
