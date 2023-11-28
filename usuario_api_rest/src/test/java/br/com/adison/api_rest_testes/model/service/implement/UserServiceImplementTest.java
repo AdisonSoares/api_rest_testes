@@ -71,14 +71,13 @@ class UserServiceImplementTest {
 
     /**
      * @Funcionalidade_original_testada: Retorna um objeto Users com um id especificado nos parâmetros
-     * ou lança uma exception caso nao tenha no banco,
-     * (return object.orElseThrow(()-> new ObjectNotFoundException("Objeto não encontrado!").
+     * ou lança uma exception caso nao tenha no banco. (findById)<p>
      *
      * @Nomeação: Esse método é para testar o findById, porém seu nome deve ser uma descrição
-     * do teste que vai ser feito.
+     * do teste que vai ser feito.<p>
      *
      * @Descrição: Quando executar FindById retorna uma instância de usuário,
-     * (whenRunnigFindByIdThenReturnAnUserInstance).
+     * (whenRunnigFindByIdThenReturnAnUserInstance).<p>
      *
      * @Explicação: Na primeira linha do teste é mockado os dados passados no parâmetro,
      * quando chamar o findById de repository passando qualquer número inteiro como id
@@ -120,8 +119,7 @@ class UserServiceImplementTest {
 
     /**
      * @Funcionalidade_original_testada: Retorna uma exception caso não encontre o objeto buscado,
-     * e exibe uma mensagem de erro,(return object.orElseThrow(()-> new ObjectNotFoundException
-     * ("Objeto não encontrado!").<p>
+     * e exibe uma mensagem de erro. (findById)<p>
      *
      * @Nomeação: Esse método é para testar o lançamento de exception do findById, porém seu nome deve
      * ser uma descrição do teste que vai ser feito.<p>
@@ -152,7 +150,7 @@ class UserServiceImplementTest {
 
     /**
      * @Funcionalidade_original_testada: Retorna uma lista com todos os objetos users guardados
-     * no banco.<p>
+     * no banco. (findAll)<p>
      *
      * @Nomeação: Esse método é para testar o retorno da funcionalidade findAll, porém seu nome deve
      * ser uma descrição do teste que vai ser feito.<p>
@@ -192,7 +190,8 @@ class UserServiceImplementTest {
 
     /**
      * @Funcionalidade_original_testada: Cria um objeto um novo usuário no banco, ou seja, um
-     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.<p>
+     * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
+     * (create).<p>
      *
      * @Nomeação: Esse método é para testar a criação de um objeto do tipo users no banco.<p>
      *
