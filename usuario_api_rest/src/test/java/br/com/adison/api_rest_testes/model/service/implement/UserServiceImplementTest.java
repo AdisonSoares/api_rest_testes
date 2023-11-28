@@ -229,7 +229,7 @@ class UserServiceImplementTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Cria um objeto um novo usuário no banco, ou seja, um
+     * @Funcionalidade_original_testada: Cria um objeto, um novo usuário no banco, ou seja, um
      * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
      * (create e findByEmail).<p>
      *
@@ -267,9 +267,42 @@ class UserServiceImplementTest {
         }
     }
 
+    /**
+     * @Funcionalidade_original_testada: Atualiza um objeto, um usuário existente no banco, ou seja,
+     * um objeto do tipo users, caso tenha email duplicado lança uma exception pelo teste feito antes.
+     * (update).<p>
+     *
+     * @Nomeação: Esse método é para a atualização de um objeto users no banco.<p>
+     *
+     * @Descrição: Quando executar update atualiza o users com sucesso no banco,
+     * (whenRunnigUpdateThenReturnSucess).<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se a classe guardada no mocks corresponde a Users.class.<p>
+     * - TERCEIRA: verifica se o id mockado corresponde a ID.<p>
+     * - QUARTA: verifica se o nome mockado corresponde a NOME_TESTE.<p>
+     * - QUINTA: verifica se o email mockado corresponde a EMAIL.<p>
+     * - SEXTA: verifica se a senha mockada corresponde a PASSWORD.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     */
     @Test
-    void update() {
+    void whenRunnigUpdateThenReturnSucess() {
+        Mockito
+                .when(repository
+                        .save(any()))
+                .thenReturn(users);
+        Users response = service.update(userDTO);
 
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(Users.class, response.getClass());
+
+        Assertions.assertEquals(ID, response.getId());
+        Assertions.assertEquals(NOME_TESTE, response.getName());
+        Assertions.assertEquals(EMAIL, response.getEmail());
+        Assertions.assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
