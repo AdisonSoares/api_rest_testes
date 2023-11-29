@@ -18,8 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 
 /**
  * @Resumo: Classe criada para testar os métodos da classe UserServiceImplement, usando os recursos da Ide
@@ -306,6 +305,7 @@ class UserServiceImplementTest {
     }
 
     /**
+<<<<<<< HEAD
      * @Funcionalidade_original_testada: Atualiza um objeto, usuário existente no banco, ou seja, um
      * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
      * (update e findByEmail).<p>
@@ -344,8 +344,45 @@ class UserServiceImplementTest {
         }
     }
 
+=======
+     * @Funcionalidade_original_testada: Deleta um objeto users do banco, mas antes verifica se o
+     * objeto indicado no parâmetro para ser deletado existe por meio do método findById, caso
+     * exista o objeto é deletado não exista lança uma exception. (delete).<p>
+     *
+     * @Nomeação: Esse método é para a remoção de um objeto users no banco.<p>
+     *
+     * @Descrição: Quando executar delete remove o users com sucesso no banco,
+     * (whenRunnigDeleteThenReturnSucess).<p>
+     *
+     * @When: Na primeira parte do teste é feito um mock do objeto optionalUser no repository
+     * para não apresentar a exception de email duplicado e passar no teste findById, pois esse
+     * teste é de sucesso para deletar.<p>
+     *
+     * @DoNothing: Esse comando do mockito indica para fazer nada quando chamar o método deleteById
+     * do repository passando qualquer número de id, "anyInt".<p>
+     *
+     * @Explicação: Após preparar os dados mockados é chamado o método delete do objeto "service"
+     * passando o ID estático criado.
+     *
+     * @Verify: Como esse método não tem retorno é preciso "verificar" no repository quantas vezes
+     * ele foi chamado usando o método deleteById, para passar precisa ser apenas uma vez.
+     *
+     */
+>>>>>>> develop
     @Test
-    void delete() {
+    void whenRunnigDeleteThenReturnSucess() {
+        Mockito
+                .when(repository
+                        .findById(anyInt()))
+                .thenReturn(optionalUser);
+
+        Mockito
+                .doNothing().when(repository).deleteById(anyInt());
+
+        service.delete(ID);
+
+        Mockito.verify(repository, Mockito.times(1))
+                .deleteById(anyInt());
     }
 
     /**
