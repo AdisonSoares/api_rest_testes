@@ -345,6 +345,45 @@ class UserServiceImplementTest {
     }
 
     /**
+     * @Funcionalidade_original_testada: Deleta um objeto users do banco, mas antes verifica se o
+     * objeto indicado no parâmetro para ser deletado existe por meio do método findById, caso
+     * exista o objeto é deletado não exista lança uma exception. (delete e findById).<p>
+     *
+     * @Nomeação: Esse método é para a remoção de um objeto users no banco que lança uma exception.<p>
+     *
+     * @Descrição: Quando executar delete não remove o users do banco e lança uma exception,
+     * (whenRunnigDeleteThenReturnAnObjectNotFoundException).<p>
+     *
+     * @When: É feito um mock do objeto optionalUser no repository porém seu retorno deve ser
+     * o lançamento de uma exception, pois esse teste não é de sucesso para deletar mas para
+     * testar a exception lançada.<p>
+     *
+     * @Explicação: É tentada a execução do método "delete" por meio do service passando
+     * o ID estático que vai gerar a exception mockada, essa exception vai ser capturada
+     * no catch para validações.
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se a classe capturada no catch corresponde a classe ObjectNotFoundException.class.<p>
+     * - SEGUNDA: verifica se a mensagem da classe capturada no catch corresponde a mensagem da exception.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     *
+     */
+    @Test
+    void  whenRunnigDeleteThenReturnAnObjectNotFoundException(){
+        Mockito
+                .when(repository.findById(anyInt()))
+                .thenThrow(new ObjectNotFoundException("Objeto não encontrado!"));
+        try {
+            service.delete(ID);
+        }catch (Exception ex){
+            Assertions.assertEquals(ObjectNotFoundException.class, ex.getClass());
+            Assertions.assertEquals("Objeto não encontrado!", ex.getMessage());
+        }
+    }
+
+    /**
      * @Finalidade: Método de inicialização dos objetos users, caso não sejam iniciados
      * ao serem usados acontece uma exception do tipo nullpointerexception.<p>
      * No caso do objeto optional seu construtor vai ser de/of um objeto users.
