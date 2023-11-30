@@ -305,7 +305,6 @@ class UserServiceImplementTest {
     }
 
     /**
-<<<<<<< HEAD
      * @Funcionalidade_original_testada: Atualiza um objeto, usuário existente no banco, ou seja, um
      * objeto do tipo users, caso não tenha sucesso lança uma exception por testar email duplicado.
      * (update e findByEmail).<p>
@@ -344,7 +343,7 @@ class UserServiceImplementTest {
         }
     }
 
-=======
+/**
      * @Funcionalidade_original_testada: Deleta um objeto users do banco, mas antes verifica se o
      * objeto indicado no parâmetro para ser deletado existe por meio do método findById, caso
      * exista o objeto é deletado não exista lança uma exception. (delete).<p>
@@ -368,7 +367,6 @@ class UserServiceImplementTest {
      * ele foi chamado usando o método deleteById, para passar precisa ser apenas uma vez.
      *
      */
->>>>>>> develop
     @Test
     void whenRunnigDeleteThenReturnSucess() {
         Mockito
