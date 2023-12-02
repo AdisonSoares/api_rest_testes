@@ -61,7 +61,7 @@ class UserServiceImplementTest {
 
     /**
      * @Finalidade: Método criado para inicializar os mocks desta/this classe,
-     * e iniciar o método que feito para criar construtores aos objetos user
+     * e iniciar o método que foi feito para criar construtores aos objetos user
      * para não acontecer um lançamento de nullpointerexception.
      */
     @BeforeEach
@@ -101,7 +101,7 @@ class UserServiceImplementTest {
      * o que está retornando.<p>
      *
      * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
-     * atributos testados mais segurança seguro o sistema e os códigos serão.
+     * atributos testados mais seguro o sistema e os códigos serão.
      */
     @Test
     void whenRunnigFindByIdThenReturnAnUserInstance() {
