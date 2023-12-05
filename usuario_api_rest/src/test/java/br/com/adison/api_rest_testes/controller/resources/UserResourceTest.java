@@ -22,8 +22,8 @@ import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 class UserResourceTest {
-    public static final Integer  ID = 1;
-    public static final Integer  INDEX_ZERO = 0;
+    public static final Integer ID = 1;
+    public static final Integer INDEX_ZERO = 0;
     public static final String NOME = "nomeTeste";
     public static final String EMAIL = "emailTeste@gmail.com";
     public static final String PASSWORD = "123";
@@ -64,7 +64,7 @@ class UserResourceTest {
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
      * @Response: Ao chamar o método "findById" da classe "UserResource" passando o ID criado é possível
-     * armazenar seu retorno "ResponseEntity" do tipo "UserDTO" para testar as assertivas.<p>
+     * armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO" para testar as assertivas.<p>
      *
      * @Assertivas:
      * - PRIMEIRA: verifica se o response está nulo.<p>
@@ -121,21 +121,22 @@ class UserResourceTest {
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
      * @Response: Ao chamar o método "findAll" da classe "UserResource" é possível armazenar seu
-     * retorno "ResponseEntity" do tipo "<List<UserDTO>>" para testar as assertivas.<p>
+     * retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "<List<UserDTO>>" para
+     * testar as assertivas.<p>
      *
      * @Assertivas:
      * - PRIMEIRA: verifica se o response está nulo.<p>
      * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
      * - TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
      * - QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
-     * - QUINTA: verifica se o corpo do response está retornando uma classe "ArrayList.class" .<p>
+     * - QUINTA: verifica se o corpo do response está retornando uma classe "ArrayList.class".<p>
      * - SEXTA: verifica se no primeiro indice do corpo do response está retornado uma classe do tipo "UserDTO.class".<p>
      * - SETIMA: verifica se o id do primeiro indice do corpo do response está sendo retornado o ID estatico.<p>
      * - OITAVA: verifica se o nome do primeiro indice do corpo do response está sendo retornado o NOME estatico.<p>
      * - NONA: verifica se o email do primeiro indice do corpo do response está sendo retornado o EMAIL estatico.<p>
      * - DECIMA: verifica se a senha do primeiro indice do corpo do response está sendo retornado o PASSWORD estatico.<p>
      *
-     * @Assertivas_notnull: Verifica se o objeto o classe passada está nulo.<p>
+     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
      *
      * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
      * o que está retornando.<p>
@@ -170,8 +171,49 @@ class UserResourceTest {
         Assertions.assertEquals(PASSWORD, response.getBody().get(INDEX_ZERO).getPassword());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Esse método é para testar o "create" que retorna uma lista
+     * de objetos "ResponseEntity" do tipo "<List<UserDTO>>" tendo como parâmetro um objeto "UserDTO"
+     * para ser incluso no banco. (create)<p>
+     *
+     * @Nomeação: Quando executar "create" lendo o parâmetro com objeto "UserDTO" retorna um objeto
+     * "ResponseEntity" com sucesso, mapeando a lista de objetos "users" para "userDTO" e
+     * retornando essa lista no corpo. (whenCreateThenReturnCreated).<p>
+     *
+     * @Mockito:
+     * - PRIMEIRA: É mockado o chamado do método "create" da classe "UserServiceImplement" passando qualquer/any
+     * parâmetro e retornando uma lista de "users" com sucesso.<p>
+     *
+     * @Response: Ao chamar o método "create" da classe "UserResource" passando um objeto "userDTO" no parâmetro
+     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "<UserDTO>"
+     * para testar as assertivas.<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se a classe do response corresponde a uma classe do tipo "ResponseEntity.class".<p>
+     * - SEGUNDA: verifica se o status do response corresponde a um status do tipo "HttpStatus.CREATED".<p>
+     * - TERCEIRA: verifica se o "location" do "headers" do response não está vindo nulo, ele precisa de valor
+     * pois é a uri para localizar o novo objeto.<p>
+     * - QUARTA: verifica se o body/corpo do response está vindo nulo, pois não precisa ter retorno no body.<p>
+     *
+     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     *
+     * @Assertivas_null: Verifica se o objeto da classe passada está nulo.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.
+     */
     @Test
-    void create() {
+    void whenCreateThenReturnCreated() {
+        Mockito
+                .when(service
+                        .create(any()))
+                .thenReturn(users);
+        ResponseEntity<UserDTO> response = resource.create(userDTO);
+
+        Assertions.assertEquals(ResponseEntity.class, response.getClass());
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        Assertions.assertNotNull(response.getHeaders().get("Location"));
+        Assertions.assertNull(response.getBody());
     }
 
     @Test
