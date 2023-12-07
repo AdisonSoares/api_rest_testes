@@ -216,8 +216,67 @@ class UserResourceTest {
         Assertions.assertNull(response.getBody());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Esse método é para testar o "update" que retorna um objeto
+     * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id e um objeto do tipo "UserDTO" especificado
+     * nos parâmetros atualizando no banco o objeto especificado. (update)<p>
+     *
+     * @Nomeação: Quando executar "update" retorna um objeto "ResponseEntity" com sucesso no corpo da solicitação,
+     * mapeando um objeto "users" para "userDTO". (whenUpdateThenReturnSucess).<p>
+     *
+     * @Mockito:
+     * - PRIMEIRA: É mockado o chamado do método "update" da classe "UserServiceImplement"
+     * passando o objeto estático "userDTO" e retornando um objeto "users" com sucesso.<p>
+     * - SEGUNDA: É mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
+     * retornar um objeto do tipo "userDTO" com sucesso.<p>
+     *
+     * @Response: Ao chamar o método "update" da classe "UserResource" passando o ID e userDTO criados
+     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
+     * para testar as assertivas.<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
+     * - TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
+     * - QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
+     * - QUINTA: verifica se o corpo do response está retornando uma classe "ArrayList.class".<p>
+     * - SEXTA: verifica se no primeiro indice do corpo do response está retornado uma classe do tipo "UserDTO.class".<p>
+     * - SETIMA: verifica se o id do primeiro indice do corpo do response está sendo retornado o ID estatico.<p>
+     * - OITAVA: verifica se o nome do primeiro indice do corpo do response está sendo retornado o NOME estatico.<p>
+     * - NONA: verifica se o email do primeiro indice do corpo do response está sendo retornado o EMAIL estatico.<p>
+     * - DECIMA: verifica se a senha do primeiro indice do corpo do response está sendo retornado o PASSWORD estatico.<p>
+     *
+     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.
+     *
+     * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
+     * atributos testados mais seguro o sistema e os códigos serão.
+     */
     @Test
-    void update() {
+    void whenUpdateThenReturnSucess() {
+        Mockito
+                .when(service
+                        .update(userDTO))
+                .thenReturn(users);
+        Mockito
+                .when(mapper
+                        .map(any(), any()))
+                .thenReturn(userDTO);
+
+        ResponseEntity<UserDTO> response = resource.update(ID, userDTO);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(response.getBody());
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(ResponseEntity.class, response.getClass());
+        Assertions.assertEquals(UserDTO.class, response.getBody().getClass());
+
+        Assertions.assertEquals(ID, response.getBody().getId());
+        Assertions.assertEquals(NOME, response.getBody().getName());
+        Assertions.assertEquals(EMAIL, response.getBody().getEmail());
+        Assertions.assertEquals(PASSWORD, response.getBody().getPassword());
     }
 
     @Test
