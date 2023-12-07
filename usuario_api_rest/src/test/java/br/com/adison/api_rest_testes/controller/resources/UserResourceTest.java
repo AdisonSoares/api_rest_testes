@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @SpringBootTest
 class UserResourceTest {
@@ -230,7 +231,7 @@ class UserResourceTest {
      * - SEGUNDA: É mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
-     * @Response: Ao chamar o método "update" da classe "UserResource" passando o ID e userDTO criados
+     * @Response: Ao chamar o método "update" da classe "UserResource" passando o ID e userDTO estatico criados
      * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
      * para testar as assertivas.<p>
      *
@@ -279,8 +280,54 @@ class UserResourceTest {
         Assertions.assertEquals(PASSWORD, response.getBody().getPassword());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Esse método é para testar o "delete" que retorna um objeto
+     * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id e um objeto do tipo "UserDTO" especificado
+     * nos parâmetros atualizando no banco o objeto especificado. (update)<p>
+     *
+     * @Nomeação: Quando executar "delete" retorna um objeto "ResponseEntity" vazio no corpo
+     * da solicitação deletando o objeto indicado no id dos parametros. (whenDeleteThenReturnSucess).<p>
+     *
+     * @Mockito:
+     * - PRIMEIRA: É mockado o chamado do método "delete" da classe "UserServiceImplement" passando
+     * qualquer valor inteiro de id, porém como não tem retorno é indicado para nao fazer nada/doNothing.<p>
+     *
+     * @Response: Ao chamar o método "delete" da classe "UserResource" passando o ID estatico criado
+     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
+     * para testar as assertivas.<p>
+     *
+     * @Assertivas:
+     * - PRIMEIRA: verifica se o response está nulo.<p>
+     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
+     * - TERCEIRA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
+     * - QUARTA: verifica se a operacao foi bem sucedida mas sem conteúdo de retorno.<p>
+     *
+     * @Verify:
+     * - PRIMEIRA: verifica se o metodo delete está sendo chamado apenas uma vez para deletar.<p>
+     *
+     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     *
+     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     *
+     * @Mockito.verify: Essa função é usada para verificar se um determinado método em um
+     * mock foi chamado um número específico de vezes.<p>
+     *
+     */
     @Test
-    void delete() {
+    void whenDeleteThenReturnSucess() {
+        Mockito
+                .doNothing()
+                .when(service)
+                        .delete(anyInt());
+
+        ResponseEntity<UserDTO> response = resource.delete(ID);
+
+        Assertions.assertNotNull(response);
+        Assertions.assertNull(response.getBody());
+        Assertions.assertEquals(ResponseEntity.class, response.getClass());
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        Mockito.verify(service, Mockito.times(1)).delete(anyInt());
     }
 
     /**
