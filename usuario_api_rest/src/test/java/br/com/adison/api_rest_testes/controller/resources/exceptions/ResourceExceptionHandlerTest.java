@@ -1,5 +1,6 @@
 package br.com.adison.api_rest_testes.controller.resources.exceptions;
 
+import br.com.adison.api_rest_testes.model.service.exceptions.DataIntegratyViolationException;
 import br.com.adison.api_rest_testes.model.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +76,56 @@ class ResourceExceptionHandlerTest {
         Assertions.assertNotEquals(LocalDateTime.now(), response.getBody().getTimestamp());
     }
 
+    /**
+     * @Funcionalidade_original_testada: Esse método é para testar o "objectNotFound" que retorna um objeto
+     * "ResponseEntity" do tipo "<StandardError>" com status e um body de acordo com os dois parâmetros: a
+     * exceção lançada (DataIntegratyViolationException exception) e a requisição HTTP (HttpServletRequest request).
+     * (dataIntegrityViolationException)<p>
+     *
+     * @Nomeação: Quando executar "DataIntegrityViolationException" então retorne um objeto "ResponseEntity"
+     * com sucesso, lancando uma exception. (whenDataIntegrityViolationExceptionReturnsAResponseEntityThrowingAnException).<p>
+     *
+     * @Response: O response armazena um objeto "ResponseEntity" no tipo "StandardError", isso é feito chamando
+     * o método dataIntegrityViolationException da classe "ResourceExceptionHandler", em seus parametros sao passados um objeto
+     * "DataIntegratyViolationException", passando a mensagem de erro, e um objeto "HttpServletRequest" mockado.<p>
+     *
+     * @Assertions:
+     * - PRIMEIRA: afirma que o response nao esta nulo.<p>
+     * - SEGUNDA: afirma que o corpo/body do response nao esta nulo.<p>
+     * - TERCEIRA: afirma que o status do response corresponde a "HttpStatus.BAD_REQUEST".<p>
+     * - QUARTA: afirma que a classe do responde corresponde a "ResponseEntity.class".<p>
+     * - QUINTA: afirma que a classe do body do responde corresponde a "StandardError.class".<p>
+     * - SEXTA: afirma que a mensagem do body do responde corresponde a "E-mail já cadastrado".<p>
+     * - SETIMA: afirma que o status do body do responde corresponde a 400.<p>
+     * - OITAVA: afirma que o caminho do response nao corresponde a "/user/2".<p>
+     * - NONA: afirma que o local que ocorreu o erro do response nao corresponde a LocalDateTime.now().<p>
+     *
+     * @Assertion_notNull: Verifica se o objeto da classe passada não está nulo.<p>
+     *
+     * @Assertion_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que está retornando.<p>
+     *
+     * @Assertion_notEquals: Na primeira parte o atributo que nao deveria retornar e na segunda
+     * o que está retornando.<p>
+     *
+     */
     @Test
-    void dataIntegrityViolationException() {
+    void whenDataIntegrityViolationExceptionReturnsAResponseEntityThrowingAnException() {
+        ResponseEntity<StandardError> response = exceptionHandler
+                .dataIntegrityViolationException(
+                        new DataIntegratyViolationException("E-mail já cadastrado"),
+                        new MockHttpServletRequest());
+
+        Assertions.assertNotNull(response);
+        Assertions.assertNotNull(response.getBody());
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Assertions.assertEquals(ResponseEntity.class, response.getClass());
+        Assertions.assertEquals(StandardError.class, response.getBody().getClass());
+        Assertions.assertEquals("E-mail já cadastrado", response.getBody().getError());
+        Assertions.assertEquals(400, response.getBody().getStatus());
+
+        Assertions.assertNotEquals("/user/2", response.getBody().getPath());
+        Assertions.assertNotEquals(LocalDateTime.now(), response.getBody().getTimestamp());
     }
 }
