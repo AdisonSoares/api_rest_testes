@@ -58,7 +58,7 @@ public class ResourceExceptionHandler {
      * DataIntegratyViolationException (ou suas subclasses) e retorna uma resposta HTTP 400 BAD_REQUEST.
      */
     @ExceptionHandler(DataIntegratyViolationException.class)
-    public ResponseEntity<StandardError> dataIntegratyViolationException(DataIntegratyViolationException exception, HttpServletRequest request){
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegratyViolationException exception, HttpServletRequest request){
         StandardError error = new StandardError(LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),

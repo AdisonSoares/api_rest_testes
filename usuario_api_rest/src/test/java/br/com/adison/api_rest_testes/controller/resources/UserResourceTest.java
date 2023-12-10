@@ -218,9 +218,7 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "update" que retorna um objeto
-     * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id e um objeto do tipo "UserDTO" especificado
-     * nos parâmetros atualizando no banco o objeto especificado. (update)<p>
+     * @Funcionalidade_original_testada: Esse método é para testar o "update" que retorna cccc
      *
      * @Nomeação: Quando executar "update" retorna um objeto "ResponseEntity" com sucesso no corpo da solicitação,
      * mapeando um objeto "users" para "userDTO". (whenUpdateThenReturnSucess).<p>
