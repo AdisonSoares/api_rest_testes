@@ -21,10 +21,31 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
+/**
+ * @Resumo: Classe criada para testar os metodos de UserResource, usando os recursos da Ide
+ * para criar os moldes de cada teste.<p>
+ *
+ * @Instancias:
+ * * user (objeto da classe domain)<p>
+ * * userDTO (objeto da classe de transferencia de dados)<p>
+ * * optionalUser (objeto da classe optional que lida com dados do tipo user com possíbilidade de serem nulos)<p>
+ * * service (objeto da classe testada para implementar seus metodos)<p>
+ * * repository (objeto da classe de comunicacao com o banco)<p>
+ * * mapper (objeto da classe de conversao do banco com a classe)<p>
+ * * INDEX, ID, NOME, EMAIL, PASSWORD, EMAIL (constantes iniciadas para preencher construtores dos objetos user).<p>
+ *
+ * @Anotacoes:
+ * * @SpringBootTest (indica ao spring que essa classe eh de testes)<p>
+ * * @InjectMocks (cria uma instancia real do objeto instanciado)<p>
+ * * @Mock (cria uma instancia falsa do objeto instanciado)<p>
+ * * @BeforeEach (metodos que executam antes de tudo)<p>
+ * * @Test (metodos testados).<p>
+ *
+ */
 @SpringBootTest
 class UserResourceTest {
-    public static final Integer ID = 1;
     public static final Integer INDEX_ZERO = 0;
+    public static final Integer ID = 1;
     public static final String NOME = "nomeTeste";
     public static final String EMAIL = "emailTeste@gmail.com";
     public static final String PASSWORD = "123";
@@ -40,9 +61,9 @@ class UserResourceTest {
     private UserServiceImplement service;
 
     /**
-     * @Finalidade: Método criado para inicializar os mocks desta/this classe,
-     * e iniciar o método que foi feito para criar construtores aos objetos user
-     * para não acontecer um lançamento de nullpointerexception.
+     * @Finalidade: Metodo criado para inicializar os mocks desta/this classe,
+     * e iniciar o metodo que foi feito para criar construtores aos objetos user
+     * para nao acontecer um lancamento de nullpointerexception.
      */
     @BeforeEach
     void setUp() {
@@ -51,37 +72,38 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "findById" que retorna um objeto
-     * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id especificado nos parâmetros ou lança
+     * @Funcionalidade_original_testada: Esse metodo eh para testar o "findById" que retorna um objeto
+     * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id especificado nos parametros ou lanca
      * uma exception caso nao tenha no banco. (findById)<p>
      *
-     * @Nomeação: Quando executar "FindById" retorna um objeto "ResponseEntity" com sucesso, mapeando um
-     * objeto "users" para "userDTO". (whenFindByIdThenReturnSucess).<p>
+     * @Nomeacao: Quando executar "FindById" retorna um objeto "ResponseEntity" com sucesso, mapeando um
+     * objeto "users" para "userDTO". (whenFindByIdThenReturnSucess)<p>
      *
      * @Mockito:
-     * - PRIMEIRA: É mockado o chamado do método "findById" da classe "UserServiceImplement"
-     * passando qualquer/any número de Id e retornando um objeto "users" com sucesso.<p>
-     * - SEGUNDA: É mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
+     * * PRIMEIRA: Eh mockado o chamado do metodo "findById" da classe "UserServiceImplement"
+     * passando qualquer/any nemero de Id e retornando um objeto "users" com sucesso.<p>
+     * * SEGUNDA: Eh mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
-     * @Response: Ao chamar o método "findById" da classe "UserResource" passando o ID criado é possível
-     * armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO" para testar as assertivas.<p>
+     * @Response: Ao chamar o metodo "findById" da classe "UserResource" passando o ID criado eh possível
+     * armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO" para
+     * testar as afirmativas.<p>
      *
-     * @Assertivas:
-     * - PRIMEIRA: verifica se o response está nulo.<p>
-     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
-     * - TERCEIRA: verifica se a classe do response corresponde a uma classe "ResponseEntity.class".<p>
-     * - QUARTA: verifica se a classe do corpo do response corresponde a uma classe "UserDTO.class".<p>
-     * - QUINTA: verifica se o id do corpo do response corresponde ao ID estático passado.<p>
-     * - SEXTA: verifica se o nome do corpo do response corresponde ao NOME_TESTE estático passado.<p>
-     * - SETIMA: verifica se o email do corpo do response corresponde ao EMAIL estático passado.<p>
-     * - OITAVA: verifica se a senha do corpo do response corresponde ao PASSWORD estático passado.<p>
+     * @Assertions:
+     * * PRIMEIRA: verifica se o response esta nulo.<p>
+     * * SEGUNDA: verifica se o corpo/body do response esta nulo.<p>
+     * * TERCEIRA: verifica se a classe do response corresponde a uma classe "ResponseEntity.class".<p>
+     * * QUARTA: verifica se a classe do corpo do response corresponde a uma classe "UserDTO.class".<p>
+     * * QUINTA: verifica se o id do corpo do response corresponde ao ID estático passado.<p>
+     * * SEXTA: verifica se o nome do corpo do response corresponde ao NOME_TESTE estatico passado.<p>
+     * * SETIMA: verifica se o email do corpo do response corresponde ao EMAIL estático passado.<p>
+     * * OITAVA: verifica se a senha do corpo do response corresponde ao PASSWORD estatico passado.<p>
      *
-     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
-     * o que está retornando.<p>
+     * @Assertions_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que esta retornando.<p>
      *
-     * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
-     * atributos testados mais seguro o sistema e os códigos serão.
+     * @Recomendacao: Para que o teste seja completo eh preciso verificar todos os atributos, quanto mais
+     * atributos testados mais seguro o sistema e os codigos serao.
      */
     @Test
     void whenFindByIdThenReturnSucess() {
@@ -109,41 +131,41 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "findAll" que retorna uma lista
-     * de objetos "ResponseEntity" do tipo "<List<UserDTO>>" sem parâmetros. (findAll)<p>
+     * @Funcionalidade_original_testada: Esse metodo eh para testar o "findAll" que retorna uma lista
+     * de objetos "ResponseEntity" do tipo "<List<UserDTO>>" sem parametros. (findAll)<p>
      *
-     * @Nomeação: Quando executar "FindAll" retorna um objeto "ResponseEntity" com sucesso, mapeando a lista
-     * de objetos "users" para "userDTO" e retornando essa lista no corpo. (whenFindAllThenReturnAListOfUserDTO).<p>
+     * @Nomeacao: Quando executar "FindAll" retorna um objeto "ResponseEntity" com sucesso, mapeando a lista
+     * de objetos "users" para "userDTO" e retornando essa lista no corpo. (whenFindAllThenReturnAListOfUserDTO)<p>
      *
      * @Mockito:
-     * - PRIMEIRA: É mockado o chamado do método "findAll" da classe "UserServiceImplement" e retornando
+     * * PRIMEIRA: Eh mockado o chamado do metodo "findAll" da classe "UserServiceImplement" e retornando
      * uma lista de "users" com sucesso.<p>
-     * - SEGUNDA: É mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
+     * * SEGUNDA: Eh mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
-     * @Response: Ao chamar o método "findAll" da classe "UserResource" é possível armazenar seu
+     * @Response: Ao chamar o metodo "findAll" da classe "UserResource" eh possivel armazenar seu
      * retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "<List<UserDTO>>" para
-     * testar as assertivas.<p>
+     * testar as afirmativas.<p>
      *
-     * @Assertivas:
-     * - PRIMEIRA: verifica se o response está nulo.<p>
-     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
-     * - TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
-     * - QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
-     * - QUINTA: verifica se o corpo do response está retornando uma classe "ArrayList.class".<p>
-     * - SEXTA: verifica se no primeiro indice do corpo do response está retornado uma classe do tipo "UserDTO.class".<p>
-     * - SETIMA: verifica se o id do primeiro indice do corpo do response está sendo retornado o ID estatico.<p>
-     * - OITAVA: verifica se o nome do primeiro indice do corpo do response está sendo retornado o NOME estatico.<p>
-     * - NONA: verifica se o email do primeiro indice do corpo do response está sendo retornado o EMAIL estatico.<p>
-     * - DECIMA: verifica se a senha do primeiro indice do corpo do response está sendo retornado o PASSWORD estatico.<p>
+     * @Assertions:
+     * * PRIMEIRA: verifica se o response esta nulo.<p>
+     * * SEGUNDA: verifica se o corpo/body do response esta nulo.<p>
+     * * TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
+     * * QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
+     * * QUINTA: verifica se o corpo do response esta retornando uma classe "ArrayList.class".<p>
+     * * SEXTA: verifica se no primeiro indice do corpo do response esta retornado uma classe do tipo "UserDTO.class".<p>
+     * * SETIMA: verifica se o id do primeiro indice do corpo do response esta sendo retornado o ID estatico.<p>
+     * * OITAVA: verifica se o nome do primeiro indice do corpo do response esta sendo retornado o NOME estatico.<p>
+     * * NONA: verifica se o email do primeiro indice do corpo do response esta sendo retornado o EMAIL estatico.<p>
+     * * DECIMA: verifica se a senha do primeiro indice do corpo do response esta sendo retornado o PASSWORD estatico.<p>
      *
-     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     * @Assertions_notNull: Verifica se o objeto da classe passada nao esta nulo.<p>
      *
-     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
-     * o que está retornando.<p>
+     * @Assertions_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que esta retornando.<p>
      *
-     * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
-     * atributos testados mais seguro o sistema e os códigos serão.
+     * @Recomendacao: Para que o teste seja completo eh preciso verificar todos os atributos, quanto mais
+     * atributos testados mais seguro o sistema e os codigos serao.
      */
     @Test
     void whenFindAllThenReturnAListOfUserDTO() {
@@ -173,35 +195,35 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "create" que retorna uma lista
-     * de objetos "ResponseEntity" do tipo "<List<UserDTO>>" tendo como parâmetro um objeto "UserDTO"
+     * @Funcionalidade_original_testada: Esse metodo eh para testar o "create" que retorna uma lista
+     * de objetos "ResponseEntity" do tipo "<List<UserDTO>>" tendo como parametro um objeto "UserDTO"
      * para ser incluso no banco. (create)<p>
      *
-     * @Nomeação: Quando executar "create" lendo o parâmetro com objeto "UserDTO" retorna um objeto
+     * @Nomeacao: Quando executar "create" lendo o parametro com objeto "UserDTO" retorna um objeto
      * "ResponseEntity" com sucesso, mapeando a lista de objetos "users" para "userDTO" e
      * retornando essa lista no corpo. (whenCreateThenReturnCreated).<p>
      *
      * @Mockito:
-     * - PRIMEIRA: É mockado o chamado do método "create" da classe "UserServiceImplement" passando qualquer/any
-     * parâmetro e retornando uma lista de "users" com sucesso.<p>
+     * * PRIMEIRA: Eh mockado o chamado do metodo "create" da classe "UserServiceImplement" passando qualquer/any
+     * parametro e retornando uma lista de "users" com sucesso.<p>
      *
-     * @Response: Ao chamar o método "create" da classe "UserResource" passando um objeto "userDTO" no parâmetro
-     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "<UserDTO>"
-     * para testar as assertivas.<p>
+     * @Response: Ao chamar o metodo "create" da classe "UserResource" passando um objeto "userDTO" no parametro
+     * eh possivel armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "<UserDTO>"
+     * para testar as afirmativas.<p>
      *
-     * @Assertivas:
-     * - PRIMEIRA: verifica se a classe do response corresponde a uma classe do tipo "ResponseEntity.class".<p>
-     * - SEGUNDA: verifica se o status do response corresponde a um status do tipo "HttpStatus.CREATED".<p>
-     * - TERCEIRA: verifica se o "location" do "headers" do response não está vindo nulo, ele precisa de valor
-     * pois é a uri para localizar o novo objeto.<p>
-     * - QUARTA: verifica se o body/corpo do response está vindo nulo, pois não precisa ter retorno no body.<p>
+     * @Assertions:
+     * * PRIMEIRA: verifica se a classe do response corresponde a uma classe do tipo "ResponseEntity.class".<p>
+     * * SEGUNDA: verifica se o status do response corresponde a um status do tipo "HttpStatus.CREATED".<p>
+     * * TERCEIRA: verifica se o "location" do "headers" do response nao esta vindo nulo, ele precisa de valor
+     * pois eh a uri para localizar o novo objeto.<p>
+     * * QUARTA: verifica se o body/corpo do response esta vindo nulo, pois nao precisa ter retorno no body.<p>
      *
-     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     * @Assertions_notNull: Verifica se o objeto da classe passada nao esta nulo.<p>
      *
-     * @Assertivas_null: Verifica se o objeto da classe passada está nulo.<p>
+     * @Assertions_null: Verifica se o objeto da classe passada esta nulo.<p>
      *
-     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
-     * o que está retornando.
+     * @Assertions_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que esta retornando.
      */
     @Test
     void whenCreateThenReturnCreated() {
@@ -218,40 +240,40 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "update" que retorna cccc
+     * @Funcionalidade_original_testada: Esse metodo eh para testar o "update" que retorna
      *
-     * @Nomeação: Quando executar "update" retorna um objeto "ResponseEntity" com sucesso no corpo da solicitação,
-     * mapeando um objeto "users" para "userDTO". (whenUpdateThenReturnSucess).<p>
+     * @Nomeacao: Quando executar "update" retorna um objeto "ResponseEntity" com sucesso no corpo da solicitacao,
+     * mapeando um objeto "users" para "userDTO". (whenUpdateThenReturnSucess)<p>
      *
      * @Mockito:
-     * - PRIMEIRA: É mockado o chamado do método "update" da classe "UserServiceImplement"
-     * passando o objeto estático "userDTO" e retornando um objeto "users" com sucesso.<p>
-     * - SEGUNDA: É mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
+     * - PRIMEIRA: Eh mockado o chamado do metodo "update" da classe "UserServiceImplement"
+     * passando o objeto estatico "userDTO" e retornando um objeto "users" com sucesso.<p>
+     * - SEGUNDA: Eh mockado o mapeamento de qualquer tipo de objeto para qualquer tipo de objeto para
      * retornar um objeto do tipo "userDTO" com sucesso.<p>
      *
-     * @Response: Ao chamar o método "update" da classe "UserResource" passando o ID e userDTO estatico criados
-     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
-     * para testar as assertivas.<p>
+     * @Response: Ao chamar o metodo "update" da classe "UserResource" passando o ID e userDTO estatico criados
+     * eh possivel armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
+     * para testar as afirmativas.<p>
      *
-     * @Assertivas:
-     * - PRIMEIRA: verifica se o response está nulo.<p>
-     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
-     * - TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
-     * - QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
-     * - QUINTA: verifica se o corpo do response está retornando uma classe "ArrayList.class".<p>
-     * - SEXTA: verifica se no primeiro indice do corpo do response está retornado uma classe do tipo "UserDTO.class".<p>
-     * - SETIMA: verifica se o id do primeiro indice do corpo do response está sendo retornado o ID estatico.<p>
-     * - OITAVA: verifica se o nome do primeiro indice do corpo do response está sendo retornado o NOME estatico.<p>
-     * - NONA: verifica se o email do primeiro indice do corpo do response está sendo retornado o EMAIL estatico.<p>
-     * - DECIMA: verifica se a senha do primeiro indice do corpo do response está sendo retornado o PASSWORD estatico.<p>
+     * @Assertions:
+     * * PRIMEIRA: verifica se o response esta nulo.<p>
+     * * SEGUNDA: verifica se o corpo/body do response esta nulo.<p>
+     * * TERCEIRA: verifica se a mensagem do response corresponde a "HttpStatus.OK".<p>
+     * * QUARTA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
+     * * QUINTA: verifica se o corpo do response esta retornando uma classe "ArrayList.class".<p>
+     * * SEXTA: verifica se no primeiro indice do corpo do response esta retornado uma classe do tipo "UserDTO.class".<p>
+     * * SETIMA: verifica se o id do primeiro indice do corpo do response está sendo retornado o ID estatico.<p>
+     * * OITAVA: verifica se o nome do primeiro indice do corpo do response esta sendo retornado o NOME estatico.<p>
+     * * NONA: verifica se o email do primeiro indice do corpo do response esta sendo retornado o EMAIL estatico.<p>
+     * * DECIMA: verifica se a senha do primeiro indice do corpo do response esta sendo retornado o PASSWORD estatico.<p>
      *
-     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     * @Assertions_notNull: Verifica se o objeto da classe passada nao esta nulo.<p>
      *
-     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * @Assertions_equals: Na primeira parte o atributo que deveria retornar e na segunda
      * o que está retornando.
      *
-     * @Recomendação: Para que o teste seja completo é preciso verificar todos os atributos, quanto mais
-     * atributos testados mais seguro o sistema e os códigos serão.
+     * @Recomendacao: Para que o teste seja completo eh preciso verificar todos os atributos, quanto mais
+     * atributos testados mais seguro o sistema e os codigos serao.
      */
     @Test
     void whenUpdateThenReturnSucess() {
@@ -279,37 +301,37 @@ class UserResourceTest {
     }
 
     /**
-     * @Funcionalidade_original_testada: Esse método é para testar o "delete" que retorna um objeto
+     * @Funcionalidade_original_testada: Esse metodo eh para testar o "delete" que retorna um objeto
      * "ResponseEntity" do tipo "<UserDTO>" de acordo com um id e um objeto do tipo "UserDTO" especificado
-     * nos parâmetros atualizando no banco o objeto especificado. (update)<p>
+     * nos parametros atualizando no banco o objeto especificado. (update)<p>
      *
-     * @Nomeação: Quando executar "delete" retorna um objeto "ResponseEntity" vazio no corpo
-     * da solicitação deletando o objeto indicado no id dos parametros. (whenDeleteThenReturnSucess).<p>
+     * @Nomeacao: Quando executar "delete" retorna um objeto "ResponseEntity" vazio no corpo
+     * da solicitacao deletando o objeto indicado no id dos parametros. (whenDeleteThenReturnSucess)<p>
      *
      * @Mockito:
-     * - PRIMEIRA: É mockado o chamado do método "delete" da classe "UserServiceImplement" passando
-     * qualquer valor inteiro de id, porém como não tem retorno é indicado para nao fazer nada/doNothing.<p>
+     * * PRIMEIRA: Eh mockado o chamado do método "delete" da classe "UserServiceImplement" passando
+     * qualquer valor inteiro de id, porem como nao tem retorno eh indicado para nao fazer nada/doNothing.<p>
      *
-     * @Response: Ao chamar o método "delete" da classe "UserResource" passando o ID estatico criado
-     * é possível armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
-     * para testar as assertivas.<p>
+     * @Response: Ao chamar o metodo "delete" da classe "UserResource" passando o ID estatico criado
+     * eh possivel armazenar seu retorno "ResponseEntity" com o "status", "headers" e "body" do tipo "UserDTO"
+     * para testar as afirmativas.<p>
      *
-     * @Assertivas:
-     * - PRIMEIRA: verifica se o response está nulo.<p>
-     * - SEGUNDA: verifica se o corpo/body do response está nulo.<p>
-     * - TERCEIRA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
-     * - QUARTA: verifica se a operacao foi bem sucedida mas sem conteúdo de retorno.<p>
+     * @Assertions:
+     * * PRIMEIRA: verifica se o response esta nulo.<p>
+     * * SEGUNDA: verifica se o corpo/body do response esta nulo.<p>
+     * * TERCEIRA: verifica se a classe do responde corresponde a "ResponseEntity.class".<p>
+     * * QUARTA: verifica se a operacao foi bem sucedida mas sem conteudo de retorno.<p>
      *
      * @Verify:
-     * - PRIMEIRA: verifica se o metodo delete está sendo chamado apenas uma vez para deletar.<p>
+     * * PRIMEIRA: verifica se o metodo delete está sendo chamado apenas uma vez para deletar.<p>
      *
-     * @Assertivas_notnull: Verifica se o objeto da classe passada não está nulo.<p>
+     * @Assertions_notNull: Verifica se o objeto da classe passada nao esta nulo.<p>
      *
-     * @Assertivas_equals: Na primeira parte o atributo que deveria retornar e na segunda
-     * o que está retornando.<p>
+     * @Assertions_equals: Na primeira parte o atributo que deveria retornar e na segunda
+     * o que esta retornando.<p>
      *
-     * @Mockito.verify: Essa função é usada para verificar se um determinado método em um
-     * mock foi chamado um número específico de vezes.<p>
+     * @Mockito.verify: Essa funcao eh usada para verificar se um determinado metodo em um
+     * mock foi chamado um número especifico de vezes.<p>
      *
      */
     @Test
@@ -329,7 +351,7 @@ class UserResourceTest {
     }
 
     /**
-     * @Finalidade: Método de inicialização dos objetos users, caso não sejam iniciados
+     * @Finalidade: Metodo de inicializacao dos objetos users, caso nao sejam iniciados
      * ao serem usados acontece uma exception do tipo nullpointerexception.<p>
      */
     private void startUser(){
