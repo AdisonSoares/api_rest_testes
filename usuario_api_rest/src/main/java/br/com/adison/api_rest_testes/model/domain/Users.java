@@ -1,6 +1,7 @@
 package br.com.adison.api_rest_testes.model.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 /**
@@ -22,14 +23,19 @@ import lombok.*;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Users {
+    public static final String CAMPO_OBRIGATORIO = "Campo obrigatório!";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = CAMPO_OBRIGATORIO)
     private String name;
 
+    @NotEmpty(message = CAMPO_OBRIGATORIO)
     @Column(unique = true)
     private String email;
 
+    @NotEmpty(message = CAMPO_OBRIGATORIO)
     private String password;
 }
